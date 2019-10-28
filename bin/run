@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/command_line_interface.rb"
+puts "This is the run file running"
+CommandLineInterface.new.run
