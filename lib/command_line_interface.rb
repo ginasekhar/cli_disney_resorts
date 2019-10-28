@@ -57,8 +57,8 @@ class CommandLineInterface
   def display_resorts
     puts "display_resorts"
     Resort.all.each do |resort|
-      :name, :url, :street_address, :address_locality, :address_region, :phone
-      puts "#{resort.name.upcase}".colorize(:blue)
+      
+      puts "#{resort.name.upcase}".colorize(:red)
       puts "  Website:".colorize(:light_blue) + " #{resort.url}"
       puts "  Street:".colorize(:light_blue) + " #{resort.street_address}"
       puts "  City:".colorize(:light_blue) + " #{resort.address_locality}"
