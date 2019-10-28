@@ -35,7 +35,7 @@ class CommandLineInterface
       puts "User said Y"
       make_resorts
       add_attributes_to_resorts
-      # display_resorts
+      display_resorts
     end #if 
 
   end #run
@@ -50,7 +50,6 @@ class CommandLineInterface
     puts "running add_attributes_to_resorts"
     Resort.all.each do |resort|
       attributes = Scraper.scrape_resort_page(resort.url)
-      binding.pry
       resort.add_resort_attributes(attributes)
     end
   end
@@ -58,14 +57,13 @@ class CommandLineInterface
   def display_resorts
     puts "display_resorts"
     Resort.all.each do |resort|
+      :name, :url, :street_address, :address_locality, :address_region, :phone
       puts "#{resort.name.upcase}".colorize(:blue)
-      puts "  location:".colorize(:light_blue) + " #{resort.location}"
-      # puts "  profile quote:".colorize(:light_blue) + " #{resort.profile_quote}"
-      # puts "  bio:".colorize(:light_blue) + " #{student.bio}"
-      # puts "  twitter:".colorize(:light_blue) + " #{student.twitter}"
-      # puts "  linkedin:".colorize(:light_blue) + " #{student.linkedin}"
-      # puts "  github:".colorize(:light_blue) + " #{student.github}"
-      # puts "  blog:".colorize(:light_blue) + " #{student.blog}"
+      puts "  Website:".colorize(:light_blue) + " #{resort.url}"
+      puts "  Street:".colorize(:light_blue) + " #{resort.street_address}"
+      puts "  City:".colorize(:light_blue) + " #{resort.address_locality}"
+      puts "  State:".colorize(:light_blue) + " #{resort.address_region}"
+      puts "  Phone".colorize(:light_blue) + " #{resort.phone}"
       puts "----------------------".colorize(:green)
     end
   end

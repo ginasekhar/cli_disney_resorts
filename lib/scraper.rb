@@ -28,10 +28,29 @@ class Scraper
     doc = Nokogiri::HTML(html)
     
     resort_address =   doc.css("div.pep2-at-a-glance.mapModuleWrap")
-    @@resort_details_hash[:street_address] = resort_address.at("//span[@itemprop = 'streetAddress']").children.text
-    @@resort_details_hash[:address_locality] =resort_address.at("//span[@itemprop = 'addressLocality']").children.text
-    @@resort_details_hash[:address_region] = resort_address.at("//span[@itemprop = 'addressRegion']").children.text
-    @@resort_details_hash[:phone] = resort_address.css("p.visible-xs").css("a").attribute("href").text
+    if resort_address.at("//span[@itemprop = 'streetAddress']") 
+      @@resort_details_hash[:street_address] = resort_address.at("//span[@itemprop = 'streetAddress']").children.text
+    else
+      @@resort_details_hash[:street_address] = 'Not Available'
+    end
+      
+    if resort_address.at("//span[@itemprop = 'addressLocality']")
+      @@resort_details_hash[:address_locality] =resort_address.at("//span[@itemprop = 'addressLocality']").children.text 
+    else 
+      @@resort_details_hash[:address_locality] = 'Not Available'
+    end
+    
+    if resort_address.at("//span[@itemprop = 'addressRegion']")
+      @@resort_details_hash[:address_region] = resort_address.at("//span[@itemprop = 'addressRegion']").children.text 
+    else
+      (@@resort_details_hash[:address_region] = 'Not Available')
+    end
+    
+    if resort_address.css("p.visible-xs").css("a").attribute("href")
+      @@resort_details_hash[:phone] = resort_address.css("p.visible-xs").css("a").attribute("href").text 
+    else 
+      @@resort_details_hash[:phone] = 'Not Available'
+    end
   
    @@resort_details_hash
   
