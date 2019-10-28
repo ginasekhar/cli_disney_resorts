@@ -13,8 +13,8 @@ class Scraper
     doc = Nokogiri::HTML(html)
     doc.css(".dvcss-dt-cell.media-body-center").each do |each_resort|
       resort_summary = {}
-      resort_summary[:resort_name] = each_resort.css("a.dvcss-listing-item-card-description.clickable").attribute("aria-label").value
-      resort_summary[:resort_url] = each_resort.css("a.dvcss-listing-item-card-description.clickable").attribute("href").value
+      resort_summary[:name] = each_resort.css("a.dvcss-listing-item-card-description.clickable").attribute("aria-label").value
+      resort_summary[:url] = each_resort.css("a.dvcss-listing-item-card-description.clickable").attribute("href").value
       @@resorts_array << resort_summary
     end #each
     
@@ -27,12 +27,14 @@ class Scraper
     
     doc = Nokogiri::HTML(html)
     
-   
-    resort_details = doc.css("div.pep2-at-a-glance mapModuleWrap")
-    
-    #doc.css("div.pep2-at-a-glance mapModuleWrap").each do |resort_details| 
-    #url = resort_details.attribute("href").value
-   #@@resort_details_hash
+  
+    @@resort_details_hash[:street_address] = doc.at("//span[@itemprop = 'streetAddress']").children.text
+    @@resort_details_hash[:address_locality] =doc.at("//span[@itemprop = 'addressLocality']").children.text
+    @@resort_details_hash[:address_region] = doc.at("//span[@itemprop = 'addressRegion']").children.text
+  
+    #x = doc.css("div.pep2-at-a-glance.mapModuleWrap > p.visible-xs")
+       binding.pry
+   @@resort_details_hash
   
   end # scrape_resort_page
 end #class Scraper

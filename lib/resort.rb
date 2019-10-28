@@ -1,6 +1,6 @@
 class Resort
 
-  attr_accessor :name, :resort_url, :resort_street, :resort_locality, :resort_region 
+  attr_accessor :name, :url, :street_address, :address_locality, :address_region 
 
   @@all = []
 
@@ -10,6 +10,7 @@ class Resort
   end
 
   def self.create_from_collection(resorts_array)
+    puts "creating from collection"
     resorts_array.each { |resort_hash| self.new(resort_hash) }
   end
 

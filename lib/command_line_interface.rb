@@ -36,7 +36,7 @@ class CommandLineInterface
       # display_resorts
       puts "User said Y"
       make_resorts
-      # add_attributes_to_resorts
+      add_attributes_to_resorts
       # display_resorts
     end #if 
 
@@ -51,7 +51,7 @@ class CommandLineInterface
   def add_attributes_to_resorts
     puts "running add_attributes_to_resorts"
     Resort.all.each do |resort|
-      #attributes = Scraper.scrape_profile_page(DVC_PATH + resort.profile_url)
+      attributes = Scraper.scrape_resort_page(resort.url)
       resort.add_resort(attributes)
     end
   end
