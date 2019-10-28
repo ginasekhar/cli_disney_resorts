@@ -31,9 +31,7 @@ class CommandLineInterface
     if user_input == 'N'
       puts "Please come back when you are ready to plan your Disney vacation.  Goodbye!"
     elsif user_input == 'Y'  # if user entered Y
-      # create_resorts
-      # add_resort_details
-      # display_resorts
+      
       puts "User said Y"
       make_resorts
       add_attributes_to_resorts
@@ -52,7 +50,8 @@ class CommandLineInterface
     puts "running add_attributes_to_resorts"
     Resort.all.each do |resort|
       attributes = Scraper.scrape_resort_page(resort.url)
-      resort.add_resort(attributes)
+      binding.pry
+      resort.add_resort_attributes(attributes)
     end
   end
 

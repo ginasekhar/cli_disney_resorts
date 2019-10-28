@@ -27,13 +27,12 @@ class Scraper
     
     doc = Nokogiri::HTML(html)
     
+    resort_address =   doc.css("div.pep2-at-a-glance.mapModuleWrap")
+    @@resort_details_hash[:street_address] = resort_address.at("//span[@itemprop = 'streetAddress']").children.text
+    @@resort_details_hash[:address_locality] =resort_address.at("//span[@itemprop = 'addressLocality']").children.text
+    @@resort_details_hash[:address_region] = resort_address.at("//span[@itemprop = 'addressRegion']").children.text
+    @@resort_details_hash[:phone] = resort_address.css("p.visible-xs").css("a").attribute("href").text
   
-    @@resort_details_hash[:street_address] = doc.at("//span[@itemprop = 'streetAddress']").children.text
-    @@resort_details_hash[:address_locality] =doc.at("//span[@itemprop = 'addressLocality']").children.text
-    @@resort_details_hash[:address_region] = doc.at("//span[@itemprop = 'addressRegion']").children.text
-  
-    #x = doc.css("div.pep2-at-a-glance.mapModuleWrap > p.visible-xs")
-       binding.pry
    @@resort_details_hash
   
   end # scrape_resort_page

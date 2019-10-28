@@ -1,6 +1,6 @@
 class Resort
 
-  attr_accessor :name, :url, :street_address, :address_locality, :address_region 
+  attr_accessor :name, :url, :street_address, :address_locality, :address_region, :phone
 
   @@all = []
 
@@ -15,7 +15,6 @@ class Resort
   end
 
   def add_resort_attributes(attributes_hash)
-
     attributes_hash.each {|key, value| self.send(("#{key}="), value)}
   end
 
