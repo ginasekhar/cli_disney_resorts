@@ -11,15 +11,13 @@ class Scraper
     
     html = open(destinations_url)
     doc = Nokogiri::HTML(html)
-    
-    binding.pry
-    doc.css("li.hover-on dvcDestinationsListListingItem dvcss-listing-item clearfix panel").each do |each_resort| 
-    resort_summary = {}
-
-      resort_summary[:resort_url] = each_resort.css("a.dvcss-listing-item-card-description clickable").attribute("href").value
-      resort_summary[:resort_name] = each_resort.css("a.dvcss-listing-item-card-description clickable").attribute("label").value
+    doc.css(".dvcss-dt-cell.media-body-center").each do |each_resort|
+      resort_summary = {}
+      resort_summary[:resort_name] = each_resort.css("a.dvcss-listing-item-card-description.clickable").attribute("aria-label").value
+      resort_summary[:resort_url] = each_resort.css("a.dvcss-listing-item-card-description.clickable").attribute("href").value
       @@resorts_array << resort_summary
     end #each
+    
     @@resorts_array
   end #scrape_destinations_page
 
@@ -38,8 +36,3 @@ class Scraper
   
   end # scrape_resort_page
 end #class Scraper
-
-
-
-
-
