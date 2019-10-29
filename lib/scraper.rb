@@ -53,9 +53,9 @@ class Scraper
     # else 
     #   @@resort_details_hash[:phone] = 'Not Available'
     end
-    
+    #binding.pry
     if doc.css("div.mainDescription")
-      @@resort_details_hash[:description] = doc.css("div.mainDescription > p")[0].inner_text
+      @@resort_details_hash[:description] = doc.css("div.mainDescription")[0].inner_text 
     else 
       @@resort_details_hash[:description] = 'Not Available'
     end
