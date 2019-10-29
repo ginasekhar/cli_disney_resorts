@@ -32,6 +32,8 @@ class Scraper
       @@resort_details_hash[:street_address] = resort_address.at("//span[@itemprop = 'streetAddress']").children.text
     elsif resort_address[0]
       @@resort_details_hash[:street_address] = resort_address[0].inner_text
+    elsif doc.css("div#atGlanceModule > div.moduleDescription")
+      @@resort_details_hash[:street_address] = doc.css("div#atGlanceModule > div.moduleDescription")[0].inner_text
     end
       
     if resort_address.at("//span[@itemprop = 'addressLocality']")
@@ -53,7 +55,7 @@ class Scraper
     end
     
     if doc.css("div.mainDescription")
-      @@resort_details_hash[:description] = doc.css("div.mainDescription")[0].inner_text
+      @@resort_details_hash[:description] = doc.css("div.mainDescription > p")[0].inner_text
     else 
       @@resort_details_hash[:description] = 'Not Available'
     end
