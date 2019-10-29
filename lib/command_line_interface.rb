@@ -9,16 +9,11 @@ class CommandLineInterface
   DVC_PATH = "https://disneyvacationclub.disney.go.com/destinations/list/"
 
   def run
+
+    welcome_user
+    display_resorts
     
-    # Welcome user and prompt for response 
-    puts "Ready to plan your next Disney vacation?"
-    puts "I can show you a multitude of wonderful Disney properties"
-    puts "Your Disney villa or resort will be your Home Base for a Magical Vacation"
-    puts "Our resorts and villas feature many comforts of home"
-    puts "like kitchen, private bedrooms, washer and dryer"
-    puts "Would you like to learn more about our vacation homes?"
-    puts "Please enter Y to continue or N to quit" 
-    user_input = gets.strip.upcase
+    
     
     #Validate that user entered something, input is alphabetical, and that it is either Y or N, otherwise loop till it is
     #while user_input.empty? || !user_input.match(/\A[a-zA-Z]*\z/).nil? user_input.upcase != 'Y' || user_input.upcase != 'N'
@@ -40,6 +35,33 @@ class CommandLineInterface
 
   end #run
 
+  def welcome_user
+    puts "WELCOME TO THE DISNEY VACATION RESORT PLANNER".colorize(:orange)
+    puts "**********************************************".colorize(:purple)
+    puts "Your Disney villa or resort will be your Home Base for a Magical Vacation".colorize(:blue)
+    puts "Our resorts and villas feature many comforts of home".colorize(:blue)
+    puts "like kitchen, private bedrooms, washer and dryer".colorize(:blue)
+    puts "**********************************************".colorize(:purple)
+  end
+  
+  def process_user_input
+    
+    puts "Please enter Y to continue or N to quit" 
+    user_input = gets.strip.upcase
+    while user_input != 'exit' do
+
+      case user_input 
+        when 'list'
+          list_resorts
+        when 'list resort_details'
+          list_resort_details
+        else
+          puts "Invalid choice"
+        end #case
+    puts "What would you like to do?"
+    user_input = gets.strip.downcase
+    end #while
+  end
   def make_resorts
     puts "running make_resorts"
     resorts_array = Scraper.scrape_destinations_page(DVC_PATH)
@@ -55,8 +77,17 @@ class CommandLineInterface
   end
 
   def display_resorts
-    puts "display_resorts"
-    Resort.all.each do |resort|
+    puts "Here is a list of our Magical properties: "
+    puts "**********************************************".colorize(:purple)
+    Resort.all.each_with_index do |resort, index|
+      puts " #{index+1}. " +  "#{resort.name.upcase}".colorize(:blue)
+    end
+    puts "**********************************************".colorize(:purple)
+  end
+  
+  def display_resort_details(resort_num)
+    
+    resort = Resort.all[resort_num]
       
       puts "#{resort.name.upcase}".colorize(:red)
       puts "  Website: ".colorize(:light_blue) + " #{resort.url}"
