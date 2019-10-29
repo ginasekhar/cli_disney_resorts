@@ -1,6 +1,6 @@
 class Resort
 
-  attr_accessor :name, :url, :street_address, :address_locality, :address_region, :phone, :description
+  attr_accessor :name, :url, :street_address, :address_locality, :address_region, :phone, :description, :scraped_flag
 
   @@all = []
 

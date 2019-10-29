@@ -15,6 +15,7 @@ class Scraper
       resort_summary = {}
       resort_summary[:name] = each_resort.css("a.dvcss-listing-item-card-description.clickable").attribute("aria-label").value
       resort_summary[:url] = each_resort.css("a.dvcss-listing-item-card-description.clickable").attribute("href").value
+      resort_summary[:scraped_flag] = 'N'
       @@resorts_array << resort_summary
     end #each
     
@@ -59,6 +60,8 @@ class Scraper
     else 
       @@resort_details_hash[:description] = 'Not Available'
     end
+
+    @@resort_details_hash[:scraped_flag] = 'Y'
   
    @@resort_details_hash
   
