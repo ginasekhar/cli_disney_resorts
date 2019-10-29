@@ -11,23 +11,9 @@ class CommandLineInterface
   def run
 
     welcome_user
-    display_resorts
-    
-    
-    
-    #Validate that user entered something, input is alphabetical, and that it is either Y or N, otherwise loop till it is
-    #while user_input.empty? || !user_input.match(/\A[a-zA-Z]*\z/).nil? user_input.upcase != 'Y' || user_input.upcase != 'N'
-    while user_input.empty?
-      puts "Please enter a valid response (Y or N)"
-      user_input = gets.strip.upcase
-    end #while
-    
-    # If user enter N (or n), display goodbye msg and exit 
-    if user_input == 'N'
-      puts "Please come back when you are ready to plan your Disney vacation.  Goodbye!"
-    elsif user_input == 'Y'  # if user entered Y
-      
-      puts "User said Y"
+    list_resorts
+    process_user_input
+
       make_resorts
       add_attributes_to_resorts
       display_resorts
@@ -46,6 +32,64 @@ class CommandLineInterface
   
   def process_user_input
     
+    puts "To see details about a particular resort, enter 'details'."
+    puts "To see a list of all resorts, enter 'list'."
+    puts "To quit, type 'exit'."
+    puts "What would you like to do?"
+    user_input = gets.strip.downcase
+    
+    while user_input != 'exit' do
+      
+      case user_input 
+        when 'details'
+          puts "Please enter the corresponding number of the resort:"
+          user_input = gets.strip.to_i
+          until user_input.is_a? Numeric
+            puts "Please enter an integer number from 1 to " Resort.all.size
+            user_input = gets.strip.to_i
+            break if user_input.is_a? Numeric
+          end
+          
+        when 'list'
+          list_
+        
+        else
+          puts "Invalid choice"
+       end #case
+    puts "What would you like to do?"
+    user_input = gets.strip.downcase
+    end #while
+    puts "To ."
+    puts "To list all of the artists in your library, enter 'list artists'."
+    puts "To list all of the genres in your library, enter 'list genres'."
+    puts  "To list all of the songs by a particular artist, enter 'list artist'."
+    puts "To list all of the songs of a particular genre, enter 'list genre'."
+    puts "To play a song, enter 'play song'."
+    puts "To quit, type 'exit'."
+    puts "What would you like to do?"
+    user_input = gets.strip.downcase
+    
+    while user_input != 'exit' do
+      
+      case user_input 
+        when 'list songs'
+          list_songs
+        when 'list artists'
+          list_artists
+        when 'list genres'
+          list_genres
+        when 'list artist'
+          list_songs_by_artist
+        when 'list genre'
+          list_songs_by_genre
+        when 'play song'
+          play_song
+        else
+          puts "Invalid choice"
+       end #case
+    puts "What would you like to do?"
+    user_input = gets.strip.downcase
+    end #while
     puts "Please enter Y to continue or N to quit" 
     user_input = gets.strip.upcase
     while user_input != 'exit' do
@@ -76,7 +120,7 @@ class CommandLineInterface
     end
   end
 
-  def display_resorts
+  def list_resorts
     puts "Here is a list of our Magical properties: "
     puts "**********************************************".colorize(:purple)
     Resort.all.each_with_index do |resort, index|
