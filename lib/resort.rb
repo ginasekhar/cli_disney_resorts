@@ -10,7 +10,6 @@ class Resort
   end
 
   def self.create_from_collection(resorts_array)
-    puts "creating from collection"
     resorts_array.each { |resort_hash| self.new(resort_hash) }
   end
 
