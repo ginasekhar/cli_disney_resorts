@@ -59,11 +59,12 @@ class CommandLineInterface
     Resort.all.each do |resort|
       
       puts "#{resort.name.upcase}".colorize(:red)
-      puts "  Website:".colorize(:light_blue) + " #{resort.url}"
-      puts "  Street:".colorize(:light_blue) + " #{resort.street_address}"
-      puts "  City:".colorize(:light_blue) + " #{resort.address_locality}"
-      puts "  State:".colorize(:light_blue) + " #{resort.address_region}"
-      puts "  Phone".colorize(:light_blue) + " #{resort.phone}"
+      puts "  Website: ".colorize(:light_blue) + " #{resort.url}"
+      puts "  Street: ".colorize(:light_blue) + " #{resort.street_address}"
+      puts "  City: ".colorize(:light_blue) + " #{resort.address_locality}"
+      puts "  State: ".colorize(:light_blue) + " #{resort.address_region}"
+      puts "  Phone: ".colorize(:light_blue) + " #{resort.phone}"
+      puts "  Description: ".colorize(:light_blue) +  "#{resort.description}"
       puts "----------------------".colorize(:green)
     end
   end
