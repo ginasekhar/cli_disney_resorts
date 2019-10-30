@@ -29,36 +29,40 @@ class Scraper
     doc = Nokogiri::HTML(html)
     
     resort_address =   doc.css("div.pep2-at-a-glance.mapModuleWrap")
+    
     if resort_address.at("//span[@itemprop = 'streetAddress']") 
-      @@resort_details_hash[:street_address] = resort_address.at("//span[@itemprop = 'streetAddress']").children.text
-    elsif resort_address[0]
-      binding.pry
-      @@resort_details_hash[:street_address] = resort_address[0].inner_text
+      @@resort_details_hash[:street_address] = resort_address.at("//span[@itemprop = 'streetAddress']").children.text.strip
+    elsif resort_address.css("p")[0] #this only applies to hilton head
+      @@resort_details_hash[:street_address] = resort_address.css("p")[0].children.text.strip
     elsif doc.css("div#atGlanceModule > div.moduleDescription")
-      binding.pry
-      @@resort_details_hash[:street_address] = doc.css("div#atGlanceModule > div.moduleDescription")[0].inner_text
+      @@resort_details_hash[:street_address] = doc.css("div#atGlanceModule > div.moduleDescription")[0].inner_text.strip
     end
       
     if resort_address.at("//span[@itemprop = 'addressLocality']")
-      @@resort_details_hash[:address_locality] =resort_address.at("//span[@itemprop = 'addressLocality']").children.text 
+      @@resort_details_hash[:address_locality] =resort_address.at("//span[@itemprop = 'addressLocality']").children.text.strip
     # else 
     #   @@resort_details_hash[:address_locality] = 'Not Available'
     end
     
     if resort_address.at("//span[@itemprop = 'addressRegion']")
-      @@resort_details_hash[:address_region] = resort_address.at("//span[@itemprop = 'addressRegion']").children.text 
+      @@resort_details_hash[:address_region] = resort_address.at("//span[@itemprop = 'addressRegion']").children.text.strip 
     # else
     #   (@@resort_details_hash[:address_region] = 'Not Available')
     end
     
     if resort_address.css("p.visible-xs").css("a").attribute("href")
       @@resort_details_hash[:phone] = resort_address.css("p.visible-xs").css("a").attribute("href").text 
-    # else 
+    elsif resort_address.css("p")[1] #this only applies to hilton head
+      @@resort_details_hash[:phone] = resort_address.css("p")[1].children.text.strip
+    #else 
     #   @@resort_details_hash[:phone] = 'Not Available'
     end
-    #binding.pry
-    if doc.css("div.mainDescription")
-      @@resort_details_hash[:description] = doc.css("div.mainDescription")[0].inner_text 
+    
+    if doc.css("div.mainDescription > p")
+    #   @@resort_details_hash[:description] = doc.css("div.mainDescription > p").text.strip
+    # elsif doc.css("div.mainDescription")
+      @@resort_details_hash[:description] = doc.css("div.mainDescription")[0].text.strip
+      #@@resort_details_hash[:description] = doc.css("div.mainDescription")[0].inner_text 
     else 
       @@resort_details_hash[:description] = 'Not Available'
     end
