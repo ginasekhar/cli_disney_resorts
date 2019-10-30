@@ -38,7 +38,7 @@ class Scraper
     elsif resort_address.children[2] #this only applies to riviera
       @@resort_details_hash[:street_address] = resort_address.children[2].text.strip
     elsif doc.css("div#atGlanceModule > div.moduleDescription")
-      @@resort_details_hash[:street_address] = doc.css("div#atGlanceModule > div.moduleDescription")[0].inner_text.strip
+      @@resort_details_hash[:street_address] = doc.css("div#atGlanceModule > div.moduleDescription").text.strip
     end
       
     if resort_address.at("//span[@itemprop = 'addressLocality']")
@@ -56,18 +56,15 @@ class Scraper
     end
     
     if resort_address.css("p.visible-xs").css("a").attribute("href")
-      @@resort_details_hash[:phone] = resort_address.css("p.visible-xs").css("a").attribute("href").text 
+      @@resort_details_hash[:phone] = resort_address.css("p.visible-xs").css("a").attribute("href").text.strip
     elsif resort_address.css("p")[1] #this only applies to hilton head
       @@resort_details_hash[:phone] = resort_address.css("p")[1].children.text.strip
     #else 
     #   @@resort_details_hash[:phone] = 'Not Available'
     end
-    
-    if doc.css("div.mainDescription > p")
-    #   @@resort_details_hash[:description] = doc.css("div.mainDescription > p").text.strip
-    # elsif doc.css("div.mainDescription")
-      @@resort_details_hash[:description] = doc.css("div.mainDescription")[0].text.strip
-      #@@resort_details_hash[:description] = doc.css("div.mainDescription")[0].inner_text 
+    #binding.pry
+    if doc.css("div.mainDescription")
+      @@resort_details_hash[:description] = doc.css("div.mainDescription").text.strip
     else 
       @@resort_details_hash[:description] = 'Not Available'
     end
