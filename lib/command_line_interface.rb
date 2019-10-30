@@ -99,7 +99,7 @@ class CommandLineInterface
     puts "  City: ".colorize(:light_blue) + " #{resort.address_locality}" if resort.address_locality
     puts "  State: ".colorize(:light_blue) + " #{resort.address_region}" if resort.address_region
     puts "  Phone: ".colorize(:light_blue) + " #{resort.phone}" if resort.phone
-    puts "  Description: ".colorize(:light_blue) +  "#{resort.description}"
+    puts "  Description: ".colorize(:light_blue) +  "\n\t#{resort.description}"
     puts "_______________________________________________________________________________________________".colorize(:green)
   end
 

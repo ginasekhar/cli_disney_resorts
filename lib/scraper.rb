@@ -36,15 +36,15 @@ class Scraper
     elsif resort_address.css("p")[0] #this only applies to hilton head
       @@resort_details_hash[:street_address] = resort_address.css("p")[0].children.text.strip
     elsif resort_address.children[2] #this only applies to riviera
-      @@resort_details_hash[:street_address] = resort_address.children[2].text.strip
+      @@resort_details_hash[:street_address] = (resort_address.children[2].text + resort_address.children[4].text).strip
     elsif doc.css("div#atGlanceModule > div.moduleDescription")
       @@resort_details_hash[:street_address] = doc.css("div#atGlanceModule > div.moduleDescription").text.strip
     end
       
     if resort_address.at("//span[@itemprop = 'addressLocality']")
       @@resort_details_hash[:address_locality] =resort_address.at("//span[@itemprop = 'addressLocality']").children.text.strip
-    elsif resort_address.children[4]
-      @@resort_details_hash[:address_locality] = resort_address.children[4].text.strip #this is for riviera
+    # elsif resort_address.children[4]
+    #   @@resort_details_hash[:address_locality] = resort_address.children[4].text.strip #this is for riviera
     # else 
     #   @@resort_details_hash[:address_locality] = 'Not Available'
     end
@@ -62,11 +62,23 @@ class Scraper
     #else 
     #   @@resort_details_hash[:phone] = 'Not Available'
     end
+    
     #binding.pry
-    if doc.css("div.mainDescription")
+
+    ############################################################################################################
+    # THis stuff works except for 1 and 5
+    # if doc.css("div.mainDescription")
+    #   @@resort_details_hash[:description] = doc.css("div.mainDescription").text.strip
+    # else 
+    #   @@resort_details_hash[:description] = 'Not Available'
+    # end
+    #################################################################################
+    if doc.css("div.mainDescription > p")[0]
+      @@resort_details_hash[:description] = doc.css("div.mainDescription > p").text.strip
+      #binding.pry
+    else
       @@resort_details_hash[:description] = doc.css("div.mainDescription").text.strip
-    else 
-      @@resort_details_hash[:description] = 'Not Available'
+      #binding.pry
     end
 
     @@resort_details_hash[:scraped_flag] = 'Y'
