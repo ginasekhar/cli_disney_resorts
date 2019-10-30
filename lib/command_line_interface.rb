@@ -9,8 +9,9 @@ class CommandLineInterface
   DVC_PATH = "https://disneyvacationclub.disney.go.com/destinations/list/"
 
   def run
-    welcome_user
     make_resorts
+    welcome_user
+    list_resorts
     user_menu_controller
   end #run
 
@@ -19,58 +20,45 @@ class CommandLineInterface
     puts "****************************************************************************".colorize(:blue)
     puts "Your Disney villa or resort will be your Home Base for a Magical Vacation".colorize(:light_blue)
     puts "Our resorts and villas feature many comforts of home".colorize(:light_blue)
-    puts "like kitchen, private bedrooms, washer and dryer".colorize(:light_blue)
+    puts "like kitchens, private bedrooms, washer and dryer".colorize(:light_blue)
     puts "****************************************************************************".colorize(:blue)
+  
   end
 
-  def get_validate_user_input(val_type)
+  def get_validate_user_input
     user_input = gets.strip
     
-    if val_type == "main_menu" && user_input.match(/\A[A-Za-z]+\z/)
+    if user_input.match(/\A[A-Za-z]+\z/) && ((user_input.downcase == "exit") || (user_input.downcase == "list"))
       return(user_input.downcase)
-    end
-  
-    if val_type == "details_menu" && user_input.match(/\A\d+\z/) && user_input.to_i.between?(1,Resort.all.size)
+    elsif user_input.match(/\A\d+\z/) && user_input.to_i.between?(1,Resort.all.size)
       return (user_input.to_i - 1)
+    else 
+      return nil
     end
-
-    return nil
   end
 
   def user_menu_controller
     
-    puts "To see a list of all resorts, enter 'list'".colorize(:green)
-    puts "To see details about a particular resort, enter 'details'".colorize(:green)
-    puts "To see details about all resorts, enter 'all'".colorize(:green)
+    puts "To see details about a particular resort, enter the number corresponding to the resort".colorize(:green)
+    puts ("Enter a number from 1 to #{Resort.all.size}").colorize(:green)
     puts "To quit, type 'exit'.".colorize(:green)
-    puts "What would you like to do?".colorize(:green)
-    main_menu_option = get_validate_user_input("main_menu")
+  
+    main_menu_option = get_validate_user_input
     
     while main_menu_option != "exit" do
-      case main_menu_option
-        when "list"
-          list_resorts
-        when "details"
-          list_resorts
-          puts "Enter the number corresponding to the resort about which you'd like information".colorize(:green)
-          puts ("Enter a number from 1 to #{Resort.all.size}").colorize(:green)
-          resort_index = get_validate_user_input("details_menu")
-          while !resort_index do
-            puts "That is not a valid choice".colorize(:red)
-            puts ("Enter a number from 1 to #{Resort.all.size}").colorize(:green)
-            resort_index = get_validate_user_input("details_menu")
-          end #while
+      if !main_menu_option
+        puts "That is not a valid choice".colorize(:red)
+      elsif main_menu_option == 'list'
+        list_resorts
+      else #this should be a number
+        populate_resort_attributes(Resort.all[main_menu_option])
+        display_resort_details(Resort.all[main_menu_option])
+      end
       
-          populate_resort_attributes(Resort.all[resort_index])
-          display_resort_details(Resort.all[resort_index])
-        when "all"
-          Resort.all.each { |resort| populate_resort_attributes(resort)}
-          display_all_resort_details
-        else #invalid
-          puts "Invalid choice".colorize(:red)
-      end #case
-      puts "What would you like to do next? (list, details, all, exit)".colorize(:green)
-      main_menu_option = get_validate_user_input("main_menu")
+      puts "Enter 'list' to see the list of resorts, 'exit' to quit OR".colorize(:green)
+      puts "Enter a number from 1 to #{Resort.all.size} corresponding to the resort about which you'd like information".colorize(:green)
+      puts "What would you like to do next? (exit, list) OR enter a number".colorize(:green)
+      main_menu_option = get_validate_user_input
     end #while 
   end #user_menu_controller
 
