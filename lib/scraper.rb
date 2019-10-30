@@ -30,16 +30,21 @@ class Scraper
     
     resort_address =   doc.css("div.pep2-at-a-glance.mapModuleWrap")
     
+    
     if resort_address.at("//span[@itemprop = 'streetAddress']") 
       @@resort_details_hash[:street_address] = resort_address.at("//span[@itemprop = 'streetAddress']").children.text.strip
     elsif resort_address.css("p")[0] #this only applies to hilton head
       @@resort_details_hash[:street_address] = resort_address.css("p")[0].children.text.strip
+    elsif resort_address.children[2] #this only applies to riviera
+      @@resort_details_hash[:street_address] = resort_address.children[2].text.strip
     elsif doc.css("div#atGlanceModule > div.moduleDescription")
       @@resort_details_hash[:street_address] = doc.css("div#atGlanceModule > div.moduleDescription")[0].inner_text.strip
     end
       
     if resort_address.at("//span[@itemprop = 'addressLocality']")
       @@resort_details_hash[:address_locality] =resort_address.at("//span[@itemprop = 'addressLocality']").children.text.strip
+    elsif resort_address.children[4]
+      @@resort_details_hash[:address_locality] = resort_address.children[4].text.strip #this is for riviera
     # else 
     #   @@resort_details_hash[:address_locality] = 'Not Available'
     end
