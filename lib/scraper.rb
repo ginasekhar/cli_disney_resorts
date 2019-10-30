@@ -32,8 +32,10 @@ class Scraper
     if resort_address.at("//span[@itemprop = 'streetAddress']") 
       @@resort_details_hash[:street_address] = resort_address.at("//span[@itemprop = 'streetAddress']").children.text
     elsif resort_address[0]
+      binding.pry
       @@resort_details_hash[:street_address] = resort_address[0].inner_text
     elsif doc.css("div#atGlanceModule > div.moduleDescription")
+      binding.pry
       @@resort_details_hash[:street_address] = doc.css("div#atGlanceModule > div.moduleDescription")[0].inner_text
     end
       

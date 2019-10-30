@@ -15,12 +15,12 @@ class CommandLineInterface
   end #run
 
   def welcome_user
-    puts "WELCOME TO THE DISNEY VACATION RESORT PLANNER".colorize(:red)
-    puts "**********************************************".colorize(:green)
-    puts "Your Disney villa or resort will be your Home Base for a Magical Vacation".colorize(:blue)
-    puts "Our resorts and villas feature many comforts of home".colorize(:blue)
-    puts "like kitchen, private bedrooms, washer and dryer".colorize(:blue)
-    puts "**********************************************".colorize(:green)
+    puts "WELCOME TO THE DISNEY VACATION RESORT PLANNER".colorize(:blue)
+    puts "****************************************************************************".colorize(:blue)
+    puts "Your Disney villa or resort will be your Home Base for a Magical Vacation".colorize(:light_blue)
+    puts "Our resorts and villas feature many comforts of home".colorize(:light_blue)
+    puts "like kitchen, private bedrooms, washer and dryer".colorize(:light_blue)
+    puts "****************************************************************************".colorize(:blue)
   end
 
   def get_validate_user_input(val_type)
@@ -64,7 +64,6 @@ class CommandLineInterface
           populate_resort_attributes(Resort.all[resort_index])
           display_resort_details(Resort.all[resort_index])
         when "all"
-          binding.pry
           Resort.all.each { |resort| populate_resort_attributes(resort)}
           display_all_resort_details
         else #invalid
@@ -96,16 +95,16 @@ class CommandLineInterface
   end
 
   def list_resorts
-    puts "Here is a list of our Magical properties: "
-    puts "**********************************************".colorize(:red)
+    puts "HERE IS A LIST OF OUR MAGICAL PROPERTIES: ".colorize(:red)
+    puts "*************************************************************".colorize(:blue)
     Resort.all.each_with_index do |resort, index|
       puts " #{index+1}. " +  "#{resort.name.upcase}".colorize(:blue)
     end
-    puts "**********************************************".colorize(:red)
+    puts "*************************************************************".colorize(:blue)
   end
 
   def display_resort_details(resort)
-      
+    puts "_______________________________________________________________________________________________".colorize(:green)
     puts "#{resort.name.upcase}".colorize(:red)
     puts "  Website: ".colorize(:light_blue) + " #{resort.url}"
     puts "  Address: ".colorize(:light_blue) + " #{resort.street_address}"
@@ -113,7 +112,7 @@ class CommandLineInterface
     puts "  State: ".colorize(:light_blue) + " #{resort.address_region}" if resort.address_region
     puts "  Phone: ".colorize(:light_blue) + " #{resort.phone}" if resort.phone
     puts "  Description: ".colorize(:light_blue) +  "#{resort.description}"
-    puts "----------------------".colorize(:green)
+    puts "_______________________________________________________________________________________________".colorize(:green)
   end
 
 
