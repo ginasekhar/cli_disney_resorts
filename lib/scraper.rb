@@ -40,7 +40,7 @@ class Scraper
       @@resort_details_hash[:address_region] = split_addr[1].split(",")[1]
     elsif resort_address.children[2] #this only applies to riviera
       @@resort_details_hash[:street_address] = resort_address.children[2].text.strip
-      split_addr = resort_address.children[4].text.strip.split(',')
+      split_addr = resort_address.children[4].text.strip.split(',') # this is for riviera 
       @@resort_details_hash[:address_locality] = split_addr[0]
       @@resort_details_hash[:address_region] = split_addr[1]
     elsif doc.css("div#atGlanceModule > div.moduleDescription")
