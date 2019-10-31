@@ -1,28 +1,27 @@
 # CliDisneyResorts
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/cli_disney_resorts`. To experiment with that code, run `bin/console` for an interactive prompt.
+This Ruby program provides a CLI that list Disney's Vacation Club properties.
+It lists the properties on the https://disneyvacationclub.disney.go.com/destinations/list/ site
+The user can select the number corresponding to a particular property to see details.
 
-TODO: Delete this and the text above, and describe your gem
+To run this program
 
-## Installation
+To clone the repository,  run
 
-Add this line to your application's Gemfile:
+    git clone git@github.com:ginasekhar/cli_disney_resorts.git
 
-```ruby
-gem 'cli_disney_resorts'
-```
+    gem install nokogiri
 
-And then execute:
+    gem install colorize
 
-    $ bundle
+Change directory to the program directory
+    
+    cd cli_disney_resorts
 
-Or install it yourself as:
+Run the program
 
-    $ gem install cli_disney_resorts
+    ruby ./bin/run
 
-## Usage
-
-TODO: Write usage instructions here
 
 ## Development
 
