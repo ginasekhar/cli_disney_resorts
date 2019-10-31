@@ -7,8 +7,7 @@ It lists the properties on the https://disneyvacationclub.disney.go.com/destinat
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine.  
 
-To download and clone the project repository, first change to your target directory:
-    cd <yourtargetdirectory>
+In your target directory
 
     git clone git@github.com:ginasekhar/cli_disney_resorts.git
 
@@ -21,7 +20,7 @@ colorize
 
 
 ## Installation
-Install the gems required buy this program
+Install the gems required by this program
 
     gem install nokogiri
 
